@@ -1,0 +1,34 @@
+object Form1: TForm1
+  Left = 505
+  Height = 352
+  Top = 71
+  Width = 354
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'All about function and procedure'
+  ClientHeight = 352
+  ClientWidth = 354
+  Position = poWorkAreaCenter
+  LCLVersion = '4.4.0.0'
+  OnClose = FormClose
+  object PaintBox1: TPaintBox
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 0
+    Height = 352
+    Top = 0
+    Width = 354
+    Anchors = [akTop, akLeft, akRight, akBottom]
+  end
+  object Button1: TButton
+    Left = 200
+    Height = 25
+    Top = 8
+    Width = 145
+    Caption = 'Test Procedure overload'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+end
