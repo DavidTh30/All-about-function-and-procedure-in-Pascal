@@ -74,6 +74,26 @@ procedure MessBox (Msg: string; Caption: string = 'Warning'; Flags: LongInt = mb
 function IsWindows64: boolean;
 
 type
+  TLogCallback = procedure();
+
+type
+  TLogCallback2 = procedure(const Msg: String);
+
+  type
+  TLogCallback3 = procedure(Sender: TObject) of object;
+
+type
+  TWorker = class
+  public
+    procedure OnComplete(Sender: TObject);
+  end;
+
+procedure DoWork(Callback: TLogCallback); overload;
+procedure DoWork(Callback: TLogCallback2); overload;
+Procedure Process01;
+Procedure Process02(const Msg: String);
+
+type
   Unit_ = class(TForm)
   private
 
@@ -88,8 +108,38 @@ var
   StartTime64, ElapsedTime64: Cardinal;
   FBuffer:TBitmap;
   theta:extended;
+  String01:string;
+  String02:string;
+  String03:string;
 
 implementation
+
+procedure TWorker.OnComplete(Sender: TObject);
+begin
+  String03:= 'Callback triggered inside class instance!';
+end;
+
+Procedure Process01;
+Begin
+  String01:={$I %LINE%}+' Process01 -------------------------';
+End;
+
+Procedure Process02(const Msg: String);
+Begin
+  String02:={$I %LINE%}+' Process02: '+ Msg + ' -------------------------';
+End;
+
+procedure DoWork(Callback: TLogCallback); overload;
+begin
+  if Assigned(Callback) then
+    Callback;//('Work completed successfully!');
+end;
+
+procedure DoWork(Callback: TLogCallback2); overload;
+begin
+  if Assigned(Callback) then
+    Callback('Work completed successfully!');
+end;
 
 procedure log2(LINENUM_: integer; message_: string);
 begin

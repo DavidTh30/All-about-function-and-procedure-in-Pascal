@@ -72,6 +72,9 @@ var
   IsCompiler64:boolean = false;
   x:integer;
   y:integer;
+  TLog:TLogCallback2;
+  Worker: TWorker;
+  Callback: TLogCallback3;
 begin
   {$IFDEF WIN32}
     ElapsedTime32 := GetTickCount-StartTime32;
@@ -148,6 +151,27 @@ begin
   FBuffer.Canvas.LineTo(P3);
 
   FBuffer.Canvas.LineTo(P1);
+
+  String01:='';
+  DoWork(@Process01);
+  MyData:=Message01('Test');
+  FBuffer.Canvas.TextOut(150,40,'String01: '+String01);
+
+  String02:='';
+  DoWork(@Process02);
+  FBuffer.Canvas.TextOut(150,60,'String02: '+String02);
+
+  String02:='';
+  TLog:=@Process02;
+  TLog('Hello');
+  FBuffer.Canvas.TextOut(150,80,'String02: '+String02);
+
+  String03:='';
+  Worker := TWorker.Create;
+  Callback := @Worker.OnComplete;
+  Callback(Worker);
+  Worker.Free;
+  FBuffer.Canvas.TextOut(150,100,'String03: '+String03);
 
   PaintBox1.Canvas.Draw(0, 0, FBuffer);
 
